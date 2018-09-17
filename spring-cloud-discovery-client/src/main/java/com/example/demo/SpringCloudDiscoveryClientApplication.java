@@ -20,7 +20,7 @@ import com.netflix.discovery.EurekaClient;
 public class SpringCloudDiscoveryClientApplication 
 {
 	@Autowired
-	private EurekaClient client;
+	private EurekaClient eurekaClient;
 	
 	@Autowired
 	private RestTemplateBuilder restTemplateBuilder;
@@ -34,7 +34,7 @@ public class SpringCloudDiscoveryClientApplication
 	public String callService()
 	{
 		RestTemplate restTemplate = restTemplateBuilder.build();
-		InstanceInfo info = client.getNextServerFromEureka("service", false);
+		InstanceInfo info = eurekaClient.getNextServerFromEureka("service", false);
 		String baseUrl = info.getHomePageUrl();
 		ResponseEntity<String> response = restTemplate.exchange(baseUrl, HttpMethod.GET, null, String.class);
 		return response.getBody();
